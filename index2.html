@@ -1,0 +1,74 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>图片预加载-有序加载</title>
+    <style>
+        html body {
+            height: 100%;
+        }
+
+        a {
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .box {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            height: 30px;
+            line-height: 30px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 0 10px;
+            margin-right: 50px;
+            color: #333;
+        }
+
+        .btn:hover {
+            background-color: #eee
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <img src="http://pic1.5442.com/2015/0531/10/01.jpg" width="1200px" />
+        <p>
+            <a class="btn" data-control="prev" onclick="">上一页</a>
+            <a class="btn" data-control="next" onclick="">下一页</a>
+        </p>
+    </div>
+</body>
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/preload.js"></script>
+<script>
+    const imgs = [
+        'http://pic1.5442.com/2015/0531/10/01.jpg',
+        'http://pic1.win4000.com/wallpaper/c/58b8e4bb4b134.jpg',
+        'http://p4.gexing.com/shaitu/20130331/1938/515820436f20a.jpg',
+        'http://s9.knowsky.com/bizhi/l/1-5000/2009528124851141494273.jpg',
+        'http://s9.knowsky.com/bizhi/l/1-5000/2009528154431449393212.jpg',
+        'http://s9.knowsky.com/bizhi/l/1-5000/2009528124944434344887.jpg',
+        'http://s9.knowsky.com/bizhi/l/1-5000/2009528153927102755904.jpg',
+        'http://pic1.win4000.com/wallpaper/f/595dd5627fb2f.jpg',
+    ]
+    let index = 0,
+        len = imgs.length;
+
+    $('.btn').on('click', function () {
+        'prev' === $(this).data('control') ? index = Math.max(0, --index) : index = Math.min(len - 1, ++index);
+        document.title = (index + 1) + '/' + len;
+        $('img').attr('src', imgs[index]);
+    });
+    $.preload(imgs, {
+        order: true,
+    });
+</script>
+
+</html>
